@@ -5,7 +5,8 @@ require_relative('albums')
 
 class Artists
 
-  attr_reader :name, :id
+  attr_accessor :name
+  attr_reader :id
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
@@ -31,6 +32,12 @@ class Artists
     SqlRunner.run(sql)
   end
 
-  
+  def self.all()
+    sql = "SELECT * FROM artists"
+    result = SqlRunner.run(sql)
+    people = result.map { |person| Artists.new( person ) }
+    return people
+  end
+
 
 end
